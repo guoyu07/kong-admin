@@ -20,17 +20,17 @@ const dashboard = _import('dashboard/index');
 const Introduction = _import('introduction/index');
 
 /* components */
-const componentsIndex = _import('components/index');
-const Tinymce = _import('components/tinymce');
-const Markdown = _import('components/markdown');
-const JsonEditor = _import('components/jsoneditor');
-const DndList = _import('components/dndlist');
-const AvatarUpload = _import('components/avatarUpload');
-const Dropzone = _import('components/dropzone');
-const Sticky = _import('components/sticky');
-const SplitPane = _import('components/splitpane');
-const CountTo = _import('components/countTo');
-const Mixin = _import('components/mixin');
+// const componentsIndex = _import('components/index');
+// const Tinymce = _import('components/tinymce');
+// const Markdown = _import('components/markdown');
+// const JsonEditor = _import('components/jsoneditor');
+// const DndList = _import('components/dndlist');
+// const AvatarUpload = _import('components/avatarUpload');
+// const Dropzone = _import('components/dropzone');
+// const Sticky = _import('components/sticky');
+// const SplitPane = _import('components/splitpane');
+// const CountTo = _import('components/countTo');
+// const Mixin = _import('components/mixin');
 
 
 /* charts */
@@ -51,17 +51,20 @@ const ErrorLog = _import('errlog/index');
 const ExcelDownload = _import('excel/index');
 
 /* theme  */
-const Theme = _import('theme/index');
+// const Theme = _import('theme/index');
 
 /* example*/
-const TableLayout = _import('example/table/index');
-const DynamicTable = _import('example/table/dynamictable');
-const Table = _import('example/table/table');
-const DragTable = _import('example/table/dragTable');
-const InlineEditTable = _import('example/table/inlineEditTable');
+// const TableLayout = _import('example/table/index');
+// const DynamicTable = _import('example/table/dynamictable');
+// const Table = _import('example/table/table');
+// const DragTable = _import('example/table/dragTable');
+// const InlineEditTable = _import('example/table/inlineEditTable');
 
-const Form = _import('example/form');
-const Tab = _import('example/tab/index');
+// const Form = _import('example/form');
+// const Tab = _import('example/tab/index');
+
+const StatsIndex = _import('stats/index');
+const StatsUser = _import('stats/users');
 
 /* permission */
 const Permission = _import('permission/index');
@@ -78,12 +81,12 @@ Vue.use(Router);
   **/
 
 export const constantRouterMap = [
-    { path: '/login', component: Login, hidden: true },
-    { path: '/authredirect', component: authRedirect, hidden: true },
-    { path: '/sendpwd', component: sendPWD, hidden: true },
-    { path: '/reset', component: reset, hidden: true },
-    { path: '/404', component: Err404, hidden: true },
-    { path: '/401', component: Err401, hidden: true },
+  { path: '/login', component: Login, hidden: true },
+  { path: '/authredirect', component: authRedirect, hidden: true },
+  { path: '/sendpwd', component: sendPWD, hidden: true },
+  { path: '/reset', component: reset, hidden: true },
+  { path: '/404', component: Err404, hidden: true },
+  { path: '/401', component: Err401, hidden: true },
   {
     path: '/',
     component: Layout,
@@ -109,34 +112,45 @@ export default new Router({
 });
 
 export const asyncRouterMap = [
+  // {
+  //   path: '/permission',
+  //   component: Layout,
+  //   redirect: '/permission/index',
+  //   name: '权限测试',
+  //   icon: 'quanxian',
+  //   meta: { role: ['admin'] },
+  //   noDropdown: true,
+  //   children: [{ path: 'index', component: Permission, name: '权限测试页', meta: { role: ['admin'] } }]
+  // },
+  // {
+  //   path: '/components',
+  //   component: Layout,
+  //   redirect: '/components/index',
+  //   name: '组件',
+  //   icon: 'zujian',
+  //   children: [
+  //     { path: 'index', component: componentsIndex, name: '介绍 ' },
+  //     { path: 'tinymce', component: Tinymce, name: '富文本编辑器' },
+  //     { path: 'markdown', component: Markdown, name: 'Markdown' },
+  //     { path: 'jsoneditor', component: JsonEditor, name: 'JSON编辑器' },
+  //     { path: 'dndlist', component: DndList, name: '列表拖拽' },
+  //     { path: 'splitpane', component: SplitPane, name: 'SplitPane' },
+  //     { path: 'avatarupload', component: AvatarUpload, name: '头像上传' },
+  //     { path: 'dropzone', component: Dropzone, name: 'Dropzone' },
+  //     { path: 'sticky', component: Sticky, name: 'Sticky' },
+  //     { path: 'countto', component: CountTo, name: 'CountTo' },
+  //     { path: 'mixin', component: Mixin, name: '小组件' }
+  //   ]
+  // },
   {
-    path: '/permission',
+    path: '/stats',
     component: Layout,
-    redirect: '/permission/index',
-    name: '权限测试',
-    icon: 'quanxian',
-    meta: { role: ['admin'] },
-    noDropdown: true,
-    children: [{ path: 'index', component: Permission, name: '权限测试页', meta: { role: ['admin'] } }]
-  },
-  {
-    path: '/components',
-    component: Layout,
-    redirect: '/components/index',
-    name: '组件',
-    icon: 'zujian',
+    redirect: '/stats/index',
+    name: '统计',
+    icon: 'tubiaoleixingzhengchang',
     children: [
-      { path: 'index', component: componentsIndex, name: '介绍 ' },
-      { path: 'tinymce', component: Tinymce, name: '富文本编辑器' },
-      { path: 'markdown', component: Markdown, name: 'Markdown' },
-      { path: 'jsoneditor', component: JsonEditor, name: 'JSON编辑器' },
-      { path: 'dndlist', component: DndList, name: '列表拖拽' },
-      { path: 'splitpane', component: SplitPane, name: 'SplitPane' },
-      { path: 'avatarupload', component: AvatarUpload, name: '头像上传' },
-      { path: 'dropzone', component: Dropzone, name: 'Dropzone' },
-      { path: 'sticky', component: Sticky, name: 'Sticky' },
-      { path: 'countto', component: CountTo, name: 'CountTo' },
-      { path: 'mixin', component: Mixin, name: '小组件' }
+      { path: 'index', component: StatsIndex, name: '用量统计' },
+      { path: 'users/:user', component: StatsUser, name: '用户用量统计' },
     ]
   },
   {
@@ -173,48 +187,48 @@ export const asyncRouterMap = [
     noDropdown: true,
     children: [{ path: 'log', component: ErrorLog, name: '错误日志' }]
   },
-  {
-    path: '/excel',
-    component: Layout,
-    redirect: 'noredirect',
-    name: 'excel',
-    icon: 'EXCEL',
-    noDropdown: true,
-    children: [{ path: 'download', component: ExcelDownload, name: '导出excel' }]
-  },
-  {
-    path: '/theme',
-    component: Layout,
-    redirect: 'noredirect',
-    name: 'theme',
-    icon: 'theme',
-    noDropdown: true,
-    children: [{ path: 'index', component: Theme, name: '换肤' }]
-  },
-  {
-    path: '/example',
-    component: Layout,
-    redirect: 'noredirect',
-    name: '综合实例',
-    icon: 'zonghe',
-    children: [
-      {
-        path: '/example/table',
-        component: TableLayout,
-        redirect: '/example/table/table',
-        name: 'Table',
-        children: [
-          { path: 'dynamictable', component: DynamicTable, name: '动态table' },
-          { path: 'dragtable', component: DragTable, name: '拖拽table' },
-          { path: 'inline_edit_table', component: InlineEditTable, name: 'table内编辑' },
-          { path: 'table', component: Table, name: '综合table' }
-        ]
-      },
-      { path: 'form/edit', component: Form, name: '编辑Form', meta: { isEdit: true } },
-      { path: 'form/create', component: Form, name: '创建Form' },
-
-      { path: 'tab/index', component: Tab, name: 'Tab' }
-    ]
-  },
+  // {
+  //   path: '/excel',
+  //   component: Layout,
+  //   redirect: 'noredirect',
+  //   name: 'excel',
+  //   icon: 'EXCEL',
+  //   noDropdown: true,
+  //   children: [{ path: 'download', component: ExcelDownload, name: '导出excel' }]
+  // },
+  // {
+  //   path: '/theme',
+  //   component: Layout,
+  //   redirect: 'noredirect',
+  //   name: 'theme',
+  //   icon: 'theme',
+  //   noDropdown: true,
+  //   children: [{ path: 'index', component: Theme, name: '换肤' }]
+  // },
+  // {
+  //   path: '/example',
+  //   component: Layout,
+  //   redirect: 'noredirect',
+  //   name: '综合实例',
+  //   icon: 'zonghe',
+  //   children: [
+  //     {
+  //       path: '/example/table',
+  //       component: TableLayout,
+  //       redirect: '/example/table/table',
+  //       name: 'Table',
+  //       children: [
+  //         { path: 'dynamictable', component: DynamicTable, name: '动态table' },
+  //         { path: 'dragtable', component: DragTable, name: '拖拽table' },
+  //         { path: 'inline_edit_table', component: InlineEditTable, name: 'table内编辑' },
+  //         { path: 'table', component: Table, name: '综合table' }
+  //       ]
+  //     },
+  //     { path: 'form/edit', component: Form, name: '编辑Form', meta: { isEdit: true } },
+  //     { path: 'form/create', component: Form, name: '创建Form' },
+  //
+  //     { path: 'tab/index', component: Tab, name: 'Tab' }
+  //   ]
+  // },
   { path: '*', redirect: '/404', hidden: true }
 ];
