@@ -61,7 +61,8 @@ const ExcelDownload = _import('excel/index');
 // const Tab = _import('example/tab/index');
 
 const StatsIndex = _import('stats/index');
-const StatsUser = _import('stats/users');
+const UserApiQuota = _import('stats/user-api-quota');
+const UsersQuota = _import('stats/users-quota');
 
 /* permission */
 const Permission = _import('permission/index');
@@ -143,8 +144,9 @@ export const asyncRouterMap = [
     name: '统计',
     icon: 'tubiaoleixingzhengchang',
     children: [
-      { path: 'index', component: StatsIndex, name: '用量统计' },
-      { path: 'users/:user', component: StatsUser, name: '用户用量统计' },
+      { path: 'index', component: StatsIndex, name: '用量总览' },
+      { path: 'quota', component: UsersQuota, name: '用户用量' },
+      { path: 'quota/:user', component: UserApiQuota, name: '用户API用量' },
     ]
   },
   {

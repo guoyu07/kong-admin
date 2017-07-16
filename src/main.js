@@ -27,6 +27,7 @@ Vue.component('Sticky', Sticky);
 Vue.component('icon-svg', IconSvg)
 Vue.use(ElementUI);
 Vue.use(vueWaves);
+// Vue.use(Loading.directive)
 
 Vue.prototype.$http = axios
 
@@ -103,4 +104,3 @@ new Vue({
   template: '<App/>',
   components: { App }
 })
-

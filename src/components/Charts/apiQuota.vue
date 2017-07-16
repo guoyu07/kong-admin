@@ -6,13 +6,13 @@
     // 引入 ECharts 主模块
     const echarts = require('echarts/lib/echarts');
 
-    require('echarts/lib/chart/line');
+    require('echarts/lib/chart/bar');
     // 引入提示框和标题组件
     require('echarts/lib/component/tooltip');
     require('echarts/lib/component/title');
     require('echarts/lib/component/legend');
     export default {
-      name: 'apiQuotaUsage',
+      name: 'apiQuota',
       props: {
         className: {
           type: String,
@@ -30,23 +30,18 @@
           type: String,
           default: '120px'
         },
-        dim: {
-          type: String,
-          default: 'day'
-        },
-        usage: {
-          type: Array,
-          default: []
+        quota: {
+          type: Object
         }
       },
 
       mounted() {
-        this.initChart()
+        this.initChart();
       },
 
       watch: {
         quota() {
-          console.log('usage updated')
+          console.log('quota updated')
           this.setOption()
         }
       },
@@ -58,12 +53,7 @@
         },
 
         setOption() {
-          // console.log('setOption')
-          // console.log(this.series())
           this.chart.setOption({
-            title: {
-                text: this.$route.params.user + ' / ' + this.usage[0].api + ' / ' + this.dim
-            },
             tooltip : {
                 trigger: 'axis',
                 axisPointer: {
@@ -85,28 +75,31 @@
         },
 
         xAxis() {
-          return this.usage.map(x=>x['trunctime'].substr(11, 2))
+          return ["second", "minute", "hour", "day", "month", "year"]
         },
 
         series() {
-          console.log("series quota: ")
-          console.log(this.usage)
-          var usedData = this.usage.map(x=>x[this.dim + '_used'])
-          var remainingData = this.usage.map(x=>x[this.dim + '_limit']
-                - x[this.dim + '_used'])
+          let usedData = []
+          let remainingData = []
+          for (let x of this.xAxis()) {
+            let used = this.quota[x + '_' + 'used']
+            let limited = this.quota[x + '_' + 'limit']
+            let remaining = limited - used
+            // console.log(used, limited, remaining)
+            usedData.push(used)
+            remainingData.push(remaining)
+          }
 
           return [{
-            name: 'used',
-            type: 'line',
-            stack: 'usage',
-            areaStyle: {normal: {}},
-            data: usedData
+              name: 'used',
+              type: 'bar',
+              stack: 'quota',
+              data: usedData
           },{
-            name: 'remaining',
-            type: 'line',
-            stack: 'usage',
-            areaStyle: {normal: {}},
-            data: remainingData
+              name: 'remaining',
+              type: 'bar',
+              stack: 'quota',
+              data: remainingData
           }]
         }
       }

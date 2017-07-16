@@ -1,41 +1,48 @@
 <template>
-  <div class="components-container" style='height:100vh'>
-    <template v-if="apiQuota && Object.keys(apiQuota).length > 0">
-      <template v-for="(user, userName) in apiQuota">
-        <div class='chart-container' v-for="(api, apiName) in user">
-          <apiQuotaSummary :id="userName + '_' + apiName" height='100%' width='100%' :quota="api[0]"/>
-        </div>
-      </template>
-    </template>
+  <div v-loading.body="loading" class="components-container" style='height:100vh'>
+    <h1>用量总览</h1>
+    <UserUsage :usage='usage' height='100%' width='100%'/>
   </div>
 </template>
 
 <script>
-    import apiQuotaSummary from 'components/Charts/apiQuotaSummary';
+    import UserUsage from 'components/Charts/userUsage'
+    import { getUsage } from 'api/admin'
+
     export default {
-      components: { apiQuotaSummary },
-      mounted: function() {
-        console.log("mounted, loading data")
-        this.$http.get('http://gw-test.qingmang.me/api/stats')
-        .then(r => {
-          console.log('quota data fetched')
-          console.log(r.data)
-          this.apiQuota = r.data
-          console.log(this.apiQuota)
-        })
+      components: { UserUsage },
+      created: function() {
+        this.fetchData()
       },
-      data: function() {
+      data() {
         return {
-          apiQuota: undefined
+          availability: undefined,
+          usage: undefined,
+          loading: true
+        }
+      },
+      methods: {
+        fetchData() {
+            getUsage().then(r => {
+              this.usage = r.data
+              this.loading = false
+              console.log(this.usage)
+            })
         }
       }
     };
 </script>
 
 <style scoped>
-.chart-container{
+.el-row {
+  margin-bottom: 20px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+.chart-container {
   position: relative;
   width: 100%;
-  height: 300px;
+  height: 90vh;
 }
 </style>
