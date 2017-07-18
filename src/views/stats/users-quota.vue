@@ -2,15 +2,27 @@
   <div v-loading.body="loading" class="components-container" style='height:100vh'>
     <h1>用户用量</h1>
     <template v-if="apiQuota && Object.keys(apiQuota).length > 0">
-      <el-row v-for="(user, userName) in apiQuota" v-bind:key="user">
-        <el-col :span="24" class='chart-container' v-for="(api, apiName) in user" v-bind:key="userName + '_' + apiName">
-          <label>
-            <router-link :to="{name: '用户API用量', params: { user: api.consumer }}" tag="a">
-              {{api.consumer}}
-            </router-link>
-          </label> / {{api.api}} / {{api.time}}
-          <apiQuota :id="userName + '_' + apiName" height='100%' width='100%' :quota="api"/>
+      <el-row>
+        <el-col :span="6">
+          <el-select v-model="filterUser" clearable filterable placeholder="请选择用户">
+            <el-option
+              v-for="item in users"
+              :key="item"
+              :label="item"
+              :value="item">
+            </el-option>
+          </el-select>
         </el-col>
+      </el-row>
+      <el-row v-for="(user, userName) in apiQuota" v-if="!filterUser || filterUser == userName" v-bind:key="user">
+          <el-col :span="24" class='chart-container' v-for="(api, apiName) in user" v-bind:key="userName + '_' + apiName">
+            <label>
+              <router-link :to="{name: '用户API用量', params: { user: api.consumer }}" tag="a">
+                {{api.consumer}}
+              </router-link>
+            </label> / {{api.api}} / {{api.time}}
+            <apiQuota :id="userName + '_' + apiName" height='100%' width='100%' :quota="api"/>
+          </el-col>
       </el-row>
     </template>
   </div>
@@ -36,8 +48,19 @@
         },
       },
 
+      computed: {
+        users: function() {
+          if (!this.apiQuota) {
+            return []
+          }
+          return Object.keys(this.apiQuota)
+        }
+      },
+
       data() {
         return {
+          filterUser: undefined,
+          filterApi: undefined,
           apiQuota: undefined,
           loading: true
         }
